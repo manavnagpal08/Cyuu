@@ -4,76 +4,142 @@ import streamlit as st
 # PAGE CONFIG (MUST BE FIRST)
 # --------------------------------------------------
 st.set_page_config(
-    page_title="Streamlit Header Demo",
-    page_icon="🚀",
+    page_title="LinkedIn Style Header",
+    page_icon="💼",
     layout="wide"
 )
 
 # --------------------------------------------------
-# CUSTOM HEADER (TOP BAR)
+# LINKEDIN STYLE HEADER
 # --------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .app-header {
-        background: linear-gradient(90deg, #1e3a8a, #0ea5e9);
-        padding: 20px 30px;
-        border-radius: 12px;
-        margin-bottom: 25px;
-    }
-    .app-header h1 {
-        color: white;
-        margin: 0;
-        font-size: 32px;
-    }
-    .app-header p {
-        color: #e0f2fe;
-        margin: 5px 0 0;
-        font-size: 16px;
-    }
-    </style>
+st.markdown("""
+<style>
 
-    <div class="app-header">
-        <h1>🚀 Streamlit Header Supported</h1>
-        <p>Modern header bar using Streamlit + HTML/CSS</p>
+/* FIX TOP HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 9999;
+}
+
+/* LOGO */
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0a66c2;
+    margin-right: 20px;
+}
+
+/* SEARCH BAR */
+.search-box input {
+    width: 280px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: #eef3f8;
+    outline: none;
+}
+
+/* NAV ITEMS */
+.nav {
+    display: flex;
+    gap: 28px;
+    margin-left: auto;
+    align-items: center;
+}
+
+.nav-item {
+    text-align: center;
+    font-size: 12px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.nav-item i {
+    font-size: 18px;
+    display: block;
+}
+
+/* PROFILE */
+.profile img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+/* PAGE OFFSET */
+.page-content {
+    margin-top: 90px;
+}
+
+</style>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="header">
+    <div class="logo">in</div>
+
+    <div class="search-box">
+        <input type="text" placeholder="Search">
     </div>
-    """,
-    unsafe_allow_html=True
-)
+
+    <div class="nav">
+        <div class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </div>
+        <div class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            My Network
+        </div>
+        <div class="nav-item">
+            <i class="fa-solid fa-briefcase"></i>
+            Jobs
+        </div>
+        <div class="nav-item">
+            <i class="fa-solid fa-comment-dots"></i>
+            Messaging
+        </div>
+        <div class="nav-item">
+            <i class="fa-solid fa-bell"></i>
+            Notifications
+        </div>
+        <div class="profile">
+            <img src="https://i.pravatar.cc/150?img=3">
+        </div>
+    </div>
+</div>
+
+<div class="page-content"></div>
+""", unsafe_allow_html=True)
 
 # --------------------------------------------------
-# STANDARD STREAMLIT HEADERS
+# MAIN PAGE CONTENT
 # --------------------------------------------------
-st.title("Main Title (st.title)")
-st.header("Section Header (st.header)")
-st.subheader("Sub Section (st.subheader)")
+st.header("Dashboard Content")
+st.write("This content appears **below** the LinkedIn-style header.")
 
-st.write(
-    """
-    Streamlit **fully supports headers** using built-in functions  
-    and also allows **custom headers** using HTML/CSS.
-    """
-)
-
-# --------------------------------------------------
-# LAYOUT EXAMPLE
-# --------------------------------------------------
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.header("📊 Analytics")
-    st.write("Visual insights and metrics")
+    st.metric("Profile Views", 124)
 
 with col2:
-    st.header("🤖 AI Engine")
-    st.write("Smart resume & data processing")
+    st.metric("Connections", 512)
 
 with col3:
-    st.header("🔒 Security")
-    st.write("Secure authentication & access")
+    st.metric("Job Alerts", 7)
 
-# --------------------------------------------------
-# FOOTER
-# --------------------------------------------------
-st.markdown("---")
-st.caption("© 2025 | Built with Streamlit")
+st.write("Scroll down to see header stay fixed 👆")
+
+for i in range(20):
+    st.write(f"Sample content row {i+1}")

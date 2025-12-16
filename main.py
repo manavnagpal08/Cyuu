@@ -4,30 +4,38 @@ import streamlit as st
 # PAGE CONFIG (MUST BE FIRST)
 # --------------------------------------------------
 st.set_page_config(
-    page_title="LinkedIn Style Header",
+    page_title="Navbar Header",
     page_icon="💼",
     layout="wide"
 )
 
 # --------------------------------------------------
-# LINKEDIN STYLE HEADER
+# SESSION STATE FOR NAVIGATION
+# --------------------------------------------------
+if "page" not in st.session_state:
+    st.session_state.page = "Home"
+
+def navigate(page):
+    st.session_state.page = page
+
+# --------------------------------------------------
+# NAVBAR HEADER
 # --------------------------------------------------
 st.markdown("""
 <style>
-
-/* FIX TOP HEADER */
-.header {
+.navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 64px;
-    background-color: white;
+    background: white;
     border-bottom: 1px solid #e5e7eb;
     display: flex;
     align-items: center;
     padding: 0 40px;
-    z-index: 9999;
+    z-index: 10000;
+    font-family: Inter, sans-serif;
 }
 
 /* LOGO */
@@ -35,111 +43,103 @@ st.markdown("""
     font-size: 26px;
     font-weight: 800;
     color: #0a66c2;
-    margin-right: 20px;
-}
-
-/* SEARCH BAR */
-.search-box input {
-    width: 280px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    background-color: #eef3f8;
-    outline: none;
+    margin-right: 30px;
 }
 
 /* NAV ITEMS */
-.nav {
+.nav-items {
     display: flex;
-    gap: 28px;
-    margin-left: auto;
-    align-items: center;
+    gap: 24px;
 }
 
-.nav-item {
-    text-align: center;
-    font-size: 12px;
+.nav-link {
+    font-size: 14px;
     color: #374151;
     cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
 }
 
-.nav-item i {
-    font-size: 18px;
-    display: block;
+.nav-link:hover {
+    background: #f3f4f6;
 }
 
-/* PROFILE */
-.profile img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+/* ACTIVE */
+.nav-active {
+    color: #0a66c2;
+    font-weight: 600;
+}
+
+/* RIGHT SIDE */
+.right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search input {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: #eef3f8;
 }
 
 /* PAGE OFFSET */
-.page-content {
+.content {
     margin-top: 90px;
 }
-
 </style>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<div class="header">
+<div class="navbar">
     <div class="logo">in</div>
 
-    <div class="search-box">
-        <input type="text" placeholder="Search">
+    <div class="nav-items">
+        <div class="nav-link" onclick="document.getElementById('nav-home').click()">Home</div>
+        <div class="nav-link" onclick="document.getElementById('nav-network').click()">My Network</div>
+        <div class="nav-link" onclick="document.getElementById('nav-jobs').click()">Jobs</div>
+        <div class="nav-link" onclick="document.getElementById('nav-messages').click()">Messages</div>
     </div>
 
-    <div class="nav">
-        <div class="nav-item">
-            <i class="fa-solid fa-house"></i>
-            Home
+    <div class="right">
+        <div class="search">
+            <input placeholder="Search" />
         </div>
-        <div class="nav-item">
-            <i class="fa-solid fa-user-group"></i>
-            My Network
-        </div>
-        <div class="nav-item">
-            <i class="fa-solid fa-briefcase"></i>
-            Jobs
-        </div>
-        <div class="nav-item">
-            <i class="fa-solid fa-comment-dots"></i>
-            Messaging
-        </div>
-        <div class="nav-item">
-            <i class="fa-solid fa-bell"></i>
-            Notifications
-        </div>
-        <div class="profile">
-            <img src="https://i.pravatar.cc/150?img=3">
-        </div>
+        <img src="https://i.pravatar.cc/150?img=5"
+             style="width:32px;height:32px;border-radius:50%">
     </div>
 </div>
 
-<div class="page-content"></div>
+<div class="content"></div>
 """, unsafe_allow_html=True)
 
 # --------------------------------------------------
-# MAIN PAGE CONTENT
+# HIDDEN STREAMLIT BUTTONS (NAV LOGIC)
 # --------------------------------------------------
-st.header("Dashboard Content")
-st.write("This content appears **below** the LinkedIn-style header.")
+col = st.columns(4)
 
-col1, col2, col3 = st.columns(3)
+with col[0]:
+    st.button("Home", key="nav-home", on_click=navigate, args=("Home",), help="Home")
+with col[1]:
+    st.button("Network", key="nav-network", on_click=navigate, args=("Network",))
+with col[2]:
+    st.button("Jobs", key="nav-jobs", on_click=navigate, args=("Jobs",))
+with col[3]:
+    st.button("Messages", key="nav-messages", on_click=navigate, args=("Messages",))
 
-with col1:
-    st.metric("Profile Views", 124)
+# --------------------------------------------------
+# PAGE CONTENT
+# --------------------------------------------------
+st.header(st.session_state.page)
 
-with col2:
-    st.metric("Connections", 512)
-
-with col3:
-    st.metric("Job Alerts", 7)
-
-st.write("Scroll down to see header stay fixed 👆")
+if st.session_state.page == "Home":
+    st.write("🏠 Welcome to Home")
+elif st.session_state.page == "Network":
+    st.write("👥 My Network Page")
+elif st.session_state.page == "Jobs":
+    st.write("💼 Jobs Page")
+elif st.session_state.page == "Messages":
+    st.write("💬 Messages Page")
 
 for i in range(20):
-    st.write(f"Sample content row {i+1}")
+    st.write(f"Scrollable content line {i+1}")

@@ -11,13 +11,16 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# NAVIGATION BAR
+# NAVIGATION BAR (BASIC API)
 # --------------------------------------------------
-page = st_navbar(
-    ["Home", "My Network", "Jobs", "Messages", "Notifications", "Profile"],
-    logo_path=None,
-    hide_streamlit_markers=True
-)
+page = st_navbar([
+    "Home",
+    "My Network",
+    "Jobs",
+    "Messages",
+    "Notifications",
+    "Profile"
+])
 
 # --------------------------------------------------
 # PAGE CONTENT
@@ -28,13 +31,13 @@ if page == "Home":
     st.write("🏠 Welcome to Home")
 
 elif page == "My Network":
-    st.write("👥 Your professional network")
+    st.write("👥 Network page")
 
 elif page == "Jobs":
-    st.write("💼 Job listings")
+    st.write("💼 Jobs page")
 
 elif page == "Messages":
-    st.write("💬 Messages")
+    st.write("💬 Messages page")
 
 elif page == "Notifications":
     st.write("🔔 Notifications")
@@ -42,6 +45,5 @@ elif page == "Notifications":
 elif page == "Profile":
     st.write("👤 Profile page")
 
-# Demo scrolling
-for i in range(25):
-    st.write(f"Content line {i+1}")
+for i in range(20):
+    st.write(f"Scrollable content {i+1}")

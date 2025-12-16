@@ -11,12 +11,11 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# NAVIGATION BAR (HEADER)
+# NAVIGATION BAR
 # --------------------------------------------------
 page = st_navbar(
     ["Home", "My Network", "Jobs", "Messages", "Notifications", "Profile"],
-    logo_path=None,          # No image/logo
-    sticky_nav=True,         # Stays at top
+    logo_path=None,
     hide_streamlit_markers=True
 )
 
@@ -32,17 +31,17 @@ elif page == "My Network":
     st.write("👥 Your professional network")
 
 elif page == "Jobs":
-    st.write("💼 Job listings and opportunities")
+    st.write("💼 Job listings")
 
 elif page == "Messages":
-    st.write("💬 Your messages")
+    st.write("💬 Messages")
 
 elif page == "Notifications":
     st.write("🔔 Notifications")
 
 elif page == "Profile":
-    st.write("👤 Your profile")
+    st.write("👤 Profile page")
 
-# Dummy content to show sticky behavior
-for i in range(30):
-    st.write(f"Scrollable content {i+1}")
+# Demo scrolling
+for i in range(25):
+    st.write(f"Content line {i+1}")

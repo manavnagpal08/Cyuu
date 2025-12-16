@@ -1,99 +1,109 @@
 import streamlit as st
-# Make sure to install this library: pip install streamlit-option-menu
 from streamlit_option_menu import option_menu
 
-# Configuration: Select which menu example to run
-# 1: Sidebar Menu (Default)
-# 2: Horizontal Menu (Simple)
-# 3: Horizontal Menu (Custom Styles)
-EXAMPLE_NO = 1
+# --------------------------------------------------
+# PAGE CONFIG (MUST BE FIRST)
+# --------------------------------------------------
+st.set_page_config(
+    page_title="Streamlit Navigation Test",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
+# --------------------------------------------------
+# SELECT MENU TYPE
+# 1 = Sidebar menu
+# 2 = Horizontal menu (header)
+# 3 = Horizontal menu with custom style
+# --------------------------------------------------
+EXAMPLE_NO = 2   # 🔁 change 1 / 2 / 3 to test
 
-def streamlit_menu(example: int):
-    """
-    Renders the Streamlit menu based on the example number provided.
-    
-    :param example: The example number (1, 2, or 3) to render.
-    :return: The selected option string.
-    """
-    options = ["Home", "Projects", "Contact"]
-    icons = ["house", "book", "envelope"]
+# --------------------------------------------------
+# NAVIGATION MENU FUNCTION
+# --------------------------------------------------
+def streamlit_menu(example=1):
 
     if example == 1:
-        # 1. As a sidebar menu
+        # SIDEBAR MENU
         with st.sidebar:
             selected = option_menu(
-                menu_title="Main Menu",  # Required
-                options=options,  # Required
-                icons=icons,  # Optional
-                menu_icon="cast",  # Optional
-                default_index=0,  # Optional
+                menu_title="Main Menu",
+                options=["Home", "Projects", "Contact"],
+                icons=["house", "book", "envelope"],
+                menu_icon="cast",
+                default_index=0,
             )
         return selected
 
     elif example == 2:
-        # 2. Horizontal menu without custom style
+        # HORIZONTAL MENU (HEADER)
         selected = option_menu(
-            menu_title=None,  # Not required for horizontal menu
-            options=options,  # Required
-            icons=icons,  # Optional
-            menu_icon="cast",  # Optional
-            default_index=0,  # Optional
+            menu_title=None,
+            options=["Home", "Projects", "Contact"],
+            icons=["house", "book", "envelope"],
+            default_index=0,
             orientation="horizontal",
         )
         return selected
 
     elif example == 3:
-        # 3. Horizontal menu with custom style
+        # HORIZONTAL MENU WITH CUSTOM STYLE
         selected = option_menu(
-            menu_title=None,  # Not required for horizontal menu
-            options=options,  # Required
-            icons=icons,  # Optional
-            menu_icon="cast",  # Optional
-            default_index=0,  # Optional
+            menu_title=None,
+            options=["Home", "Projects", "Contact"],
+            icons=["house", "book", "envelope"],
+            default_index=0,
             orientation="horizontal",
             styles={
-                # Container style: sets background and removes padding
-                "container": {"padding": "0!important", "background-color": "#fafafa"},
-                # Icon style: sets color and size
-                "icon": {"color": "orange", "font-size": "25px"},
-                # Link style: sets font size, alignment, margin, and hover color
-                "nav-link": {
-                    "font-size": "25px",
-                    "text-align": "left",
-                    "margin": "0px",
-                    "--hover-color": "#eee",
+                "container": {
+                    "padding": "0!important",
+                    "background-color": "#ffffff",
+                    "border-bottom": "1px solid #e5e7eb",
                 },
-                # Selected link style: sets the background color for the active tab
-                "nav-link-selected": {"background-color": "green"},
+                "icon": {
+                    "color": "#2563eb",
+                    "font-size": "20px"
+                },
+                "nav-link": {
+                    "font-size": "16px",
+                    "text-align": "center",
+                    "margin": "0px",
+                    "--hover-color": "#f3f4f6",
+                },
+                "nav-link-selected": {
+                    "background-color": "#2563eb",
+                    "color": "white",
+                },
             },
         )
         return selected
-        
-    else:
-        st.error(f"Invalid example number: {example}. Please use 1, 2, or 3.")
-        return options[0] # Return default option in case of error
 
+# --------------------------------------------------
+# RENDER MENU
+# --------------------------------------------------
+selected = streamlit_menu(EXAMPLE_NO)
 
-# --- Main Application Logic ---
-# Get the selected page from the menu function
-selected = streamlit_menu(example=EXAMPLE_NO)
+# --------------------------------------------------
+# SUCCESS CONFIRMATION
+# --------------------------------------------------
+st.success("✅ Navigation menu is working. Selection detected.")
 
-# Display content based on the selection
-st.header(f"Page Selected: {selected}")
-st.write("---")
+# --------------------------------------------------
+# PAGE CONTENT
+# --------------------------------------------------
+st.title(f"You have selected: {selected}")
 
 if selected == "Home":
-    st.success("Welcome to the Home page!")
-    st.write("This is the default content for the 'Home' selection.")
-    
+    st.write("🏠 Welcome to the Home page")
+
 elif selected == "Projects":
-    st.info("Here are your exciting Projects!")
-    st.write("This is the default content for the 'Projects' selection.")
+    st.write("📁 This is the Projects page")
 
 elif selected == "Contact":
-    st.warning("Get in touch with us!")
-    st.write("This is the default content for the 'Contact' selection.")
+    st.write("📞 This is the Contact page")
 
-# Add a note about the current example
-st.caption(f"Currently running Menu Example No: **{EXAMPLE_NO}**")
+# --------------------------------------------------
+# SCROLL TEST
+# --------------------------------------------------
+for i in range(8):
+    st.write(f"Scrollable content line {i + 1}")

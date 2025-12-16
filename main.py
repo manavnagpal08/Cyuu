@@ -2,48 +2,38 @@ import streamlit as st
 from streamlit_navigation_bar import st_navbar
 
 # --------------------------------------------------
-# PAGE CONFIG (MUST BE FIRST)
+# PAGE CONFIG
 # --------------------------------------------------
 st.set_page_config(
-    page_title="Navbar Example",
-    page_icon="💼",
-    layout="wide"
+    page_title="Navbar Test",
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 # --------------------------------------------------
-# NAVIGATION BAR (BASIC API)
+# NAVIGATION BAR (MINIMAL)
 # --------------------------------------------------
-page = st_navbar([
-    "Home",
-    "My Network",
-    "Jobs",
-    "Messages",
-    "Notifications",
-    "Profile"
-])
+pages = ["Home", "About", "Contact"]
+
+page = st_navbar(pages)
 
 # --------------------------------------------------
 # PAGE CONTENT
 # --------------------------------------------------
-st.header(page)
+st.title(page)
 
 if page == "Home":
-    st.write("🏠 Welcome to Home")
+    st.write("🏠 This is the Home page")
+    st.write("Navbar is working if you can switch pages.")
 
-elif page == "My Network":
-    st.write("👥 Network page")
+elif page == "About":
+    st.write("ℹ️ This is the About page")
+    st.write("No external files, no styles.")
 
-elif page == "Jobs":
-    st.write("💼 Jobs page")
+elif page == "Contact":
+    st.write("📞 This is the Contact page")
+    st.write("Pure single-file test.")
 
-elif page == "Messages":
-    st.write("💬 Messages page")
-
-elif page == "Notifications":
-    st.write("🔔 Notifications")
-
-elif page == "Profile":
-    st.write("👤 Profile page")
-
-for i in range(20):
-    st.write(f"Scrollable content {i+1}")
+# Scroll content to test layout
+for i in range(10):
+    st.write(f"Scrollable content {i + 1}")
